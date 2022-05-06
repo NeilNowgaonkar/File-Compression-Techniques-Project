@@ -1,11 +1,12 @@
 package DAA_CP;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 
-class RLE
+class RLE extends JFrame implements ActionListener
 {
     // Perform Run–length encoding (RLE) data compression algorithm
     // on string `str`
@@ -55,59 +56,79 @@ class RLE
         return (dest.toString());
     }
 
-    public static String readFileAsString(String fileName)throws Exception
+    public static void main(String[] args) throws Exception
     {
-        String data = "";
-        data = new String(Files.readAllBytes(Paths.get(fileName)));
-        return data;
-    }
+        new Dashboard().setVisible(true);
 
-    public static void writeFile(String fileName, String str) throws IOException
-    {
-        Path path = Paths.get(fileName);
-        byte[] strToBytes = str.getBytes();
-
-        Files.write(path, strToBytes);
-
-    }
-
-    public static long printFileSizeNIO(String fileName) {
-
-        Path path = Paths.get(fileName);
-        long bytes=0;
-        try {
-
-            // size of a file (in bytes)
-            bytes = Files.size(path);
-            System.out.println(String.format("\n%,d bytes", bytes));
-            System.out.println(String.format("%,d kilobytes", bytes / 1024));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return bytes;
-    }
-
-    public static void main(String[] args) throws Exception {
+        Helper obj=new Helper();
+        FileChooser file_obj=new FileChooser();
         //String str = "AAABBBBBBBB  CCCCDDDDD";
-        //        String str = "AAAABBBBBBBBBBBBBBBBBBB  CCCCDDDDDDDDDDD";
+        //String input_file=file_obj.chooseFile();
         String input_file="D:\\STUDY\\JAVA QUESTIONS\\src\\DAA_CP\\Input.txt";
         String output_file="D:\\STUDY\\JAVA QUESTIONS\\src\\DAA_CP\\RLE_Output.txt";
 
-        String str = readFileAsString(input_file);
-        String enocded_str=encode(str);
-        System.out.print("\nInput String = "+str);
-        System.out.print("\nEncoded String = "+enocded_str);
-        writeFile(output_file,enocded_str);
-        long input_file_size = printFileSizeNIO(input_file);
-        long output_file_size = printFileSizeNIO(output_file);
+        //String str = obj.readFileAsString(input_file);
+        //String encoded_str=encode(str);
+        //System.out.print("\nInput String = "+str);
+        //System.out.print("\nEncoded String = "+encoded_str);
 
+        //obj.writeFile(output_file,encoded_str);
 
-        float compression_percentage = (1 - (output_file_size/(float)input_file_size))*100;
+        long input_file_size = obj.calcFileSize(input_file);
+        long output_file_size = obj.calcFileSize(output_file);
 
-        System.out.println("\nCompression Percentage = "+compression_percentage+" % ");
+        obj.cal_compression(input_file_size,output_file_size);
+        file_obj.file_chosen();
 
-        System.out.println("\n\n");
+    }
+
+    JButton encode_btn, decode_btn;
+
+    RLE()
+    {
+
+        encode_btn=new JButton("Encode");
+        encode_btn.setBackground(Color.BLACK);
+        encode_btn.setForeground(Color.WHITE);
+        encode_btn.setFont(new Font("Tahoma",Font.PLAIN,20));
+        encode_btn.setBounds(150,50,200,50);
+        encode_btn.addActionListener(this);
+        add(encode_btn);
+
+        decode_btn=new JButton("Decode");
+        decode_btn.setBackground(Color.BLACK);
+        decode_btn.setForeground(Color.WHITE);
+        decode_btn.setFont(new Font("Tahoma",Font.PLAIN,20));
+        decode_btn.setBounds(150,150,200,50);
+        decode_btn.addActionListener(this);
+        add(decode_btn);
+
+        setLayout(null);
+        setBounds(500,100,500,600);
+        setVisible(true);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae)
+    {
+        if(ae.getActionCommand().equals("Encode"))
+        {
+            Helper obj=new Helper();
+            String path = obj.choose_file();
+            //System.out.println(path);
+            String str = null;
+            try {
+                str = obj.readFileAsString(path);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String encoded_str=encode(str);
+            System.out.print("\nInput String = "+str);
+            System.out.print("\nEncoded String = "+encoded_str);
+        }
+        else if(ae.getActionCommand().equals("Decode"))
+        {
+
+        }
     }
 }

@@ -58,7 +58,8 @@ public class Dashboard extends JFrame implements ActionListener
     {
         if(ae.getActionCommand().equals("RLE"))
         {
-            //new RLE().setVisible(true);
+            this.setVisible(false);
+            new RLE().setVisible(true);
         }
         else if(ae.getActionCommand().equals("LZ77"))
         {
