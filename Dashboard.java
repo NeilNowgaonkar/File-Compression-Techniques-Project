@@ -44,7 +44,8 @@ public class Dashboard extends JFrame implements ActionListener
         add(Huffman_btn);
 
         setLayout(null);
-        setBounds(500,100,500,600);
+        setSize(500,500);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
