@@ -2,7 +2,7 @@
 
 ## Compression Algorithms Implemented
 
-1.) Run Length Encoding
+1.) Run Length Encoding (Done)
 
 2.) LZ77
 

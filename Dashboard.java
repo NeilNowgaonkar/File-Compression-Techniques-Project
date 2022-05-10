@@ -27,24 +27,25 @@ public class Dashboard extends JFrame implements ActionListener
         LZ77_btn.addActionListener(this);
         add(LZ77_btn);
 
-        LZSS_btn=new JButton("LZSS");
-        LZSS_btn.setBackground(Color.BLACK);
-        LZSS_btn.setForeground(Color.WHITE);
-        LZSS_btn.setFont(new Font("Tahoma",Font.PLAIN,20));
-        LZSS_btn.setBounds(150,190,200,50);
-        LZSS_btn.addActionListener(this);
-        add(LZSS_btn);
-
         Huffman_btn=new JButton("Huffman");
         Huffman_btn.setBackground(Color.BLACK);
         Huffman_btn.setForeground(Color.WHITE);
         Huffman_btn.setFont(new Font("Tahoma",Font.PLAIN,20));
-        Huffman_btn.setBounds(150,260,200,50);
+        Huffman_btn.setBounds(150,190,200,50);
         Huffman_btn.addActionListener(this);
         add(Huffman_btn);
 
+//        LZSS_btn=new JButton("LZSS");
+//        LZSS_btn.setBackground(Color.BLACK);
+//        LZSS_btn.setForeground(Color.WHITE);
+//        LZSS_btn.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        LZSS_btn.setBounds(150,260,200,50);
+//        LZSS_btn.addActionListener(this);
+//        add(LZSS_btn);
+
         setLayout(null);
         setSize(500,500);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
     }
@@ -60,11 +61,14 @@ public class Dashboard extends JFrame implements ActionListener
         if(ae.getActionCommand().equals("RLE"))
         {
             this.setVisible(false);
+//            dispose();
+//            new RLE();
             new RLE().setVisible(true);
         }
         else if(ae.getActionCommand().equals("LZ77"))
         {
-
+            this.setVisible(false);
+            new LZ77().setVisible(true);
         }
         else if(ae.getActionCommand().equals("LZSS"))
         {
