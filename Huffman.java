@@ -158,12 +158,12 @@ class Huffman extends JFrame implements ActionListener
         Map<Character, String> huffmanCode = new HashMap<>();
         encode_huffman(root_node, "", huffmanCode);
 
+        String keyFile = helper.chooseFile(false);
 
         arr[0]=helper.chooseFile(false);
 
 
         String map_value;
-
         for (Map.Entry<Character,String> entry : huffmanCode.entrySet())
         {
             map_value=entry.getKey()+"\t"+entry.getValue()+"\n";
@@ -174,7 +174,7 @@ class Huffman extends JFrame implements ActionListener
                 // Open given file in append mode by creating an
                 // object of BufferedWriter class
                 BufferedWriter out = new BufferedWriter(
-                        new FileWriter(arr[0], true));
+                        new FileWriter(keyFile, true));
 
                 // Writing on output stream
                 out.write(map_value);
@@ -193,9 +193,6 @@ class Huffman extends JFrame implements ActionListener
                     ", Value = " + entry.getValue());
         }
 
-
-
-
         //===================================================================
 
 
@@ -203,8 +200,8 @@ class Huffman extends JFrame implements ActionListener
 
 
         // Display the Huffman codes
-        System.out.println("The Huffman Codes for the given text are: " + huffmanCode);
-        System.out.println("The original text is: " + text);
+        //System.out.println("The Huffman Codes for the given text are: " + huffmanCode);
+        //System.out.println("The original text is: " + text);
 
         // display the encoded string
         StringBuilder sb = new StringBuilder();

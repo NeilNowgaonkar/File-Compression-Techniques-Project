@@ -75,8 +75,8 @@ public class Dashboard extends JFrame
         huffmanButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                dispose();
-//                new Huffman();
+                dispose();
+               new Huffman();
             }
         });
     }
