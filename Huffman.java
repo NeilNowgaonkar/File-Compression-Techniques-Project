@@ -12,10 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 
-class Huffman extends JFrame implements ActionListener
+public class Huffman extends JFrame
 {
     JButton encodeBtn, decodeBtn;
     JLabel inputFileSizeLabel,outputFileSizeLabel,compressionRatioLabel;
+    private JPanel huffmanPanel;
+    private JLabel huffmanLabel;
+    private JTextField outputFileSizeTextField;
+    private JTextField compressionRatioTextField;
+    private JButton encodeButton;
+    private JButton decodeButton;
+    private JTextField inputFileSizeTextField;
     static Helper helper;
 
     Huffman()
@@ -23,43 +30,120 @@ class Huffman extends JFrame implements ActionListener
         // Helper Object
         helper = new Helper();
 
-        // UI
-        encodeBtn=new JButton("Encode");
-        encodeBtn.setBackground(Color.BLACK);
-        encodeBtn.setForeground(Color.WHITE);
-        encodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
-        encodeBtn.setBounds(100,350,100,50);
-        encodeBtn.addActionListener(this);
-        add(encodeBtn);
-
-        decodeBtn = new JButton("Decode");
-        decodeBtn.setBackground(Color.BLACK);
-        decodeBtn.setForeground(Color.WHITE);
-        decodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
-        decodeBtn.setBounds(300,350,100,50);
-        decodeBtn.addActionListener(this);
-        add(decodeBtn);
-
-        inputFileSizeLabel = new JLabel();
-        inputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-        inputFileSizeLabel.setBounds(100,150,100,50);
-        add(inputFileSizeLabel);
-
-        outputFileSizeLabel = new JLabel();
-        outputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-        outputFileSizeLabel.setBounds(300,150,100,50);
-        add(outputFileSizeLabel);
-
-        compressionRatioLabel = new JLabel();
-        compressionRatioLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-        compressionRatioLabel.setBounds(200,250,100,50);
-        add(compressionRatioLabel);
+//        // UI
+//        encodeBtn=new JButton("Encode");
+//        encodeBtn.setBackground(Color.BLACK);
+//        encodeBtn.setForeground(Color.WHITE);
+//        encodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        encodeBtn.setBounds(100,350,100,50);
+//        encodeBtn.addActionListener(this);
+//        add(encodeBtn);
+//
+//        decodeBtn = new JButton("Decode");
+//        decodeBtn.setBackground(Color.BLACK);
+//        decodeBtn.setForeground(Color.WHITE);
+//        decodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        decodeBtn.setBounds(300,350,100,50);
+//        decodeBtn.addActionListener(this);
+//        add(decodeBtn);
+//
+//        inputFileSizeLabel = new JLabel();
+//        inputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        inputFileSizeLabel.setBounds(100,150,100,50);
+//        add(inputFileSizeLabel);
+//
+//        outputFileSizeLabel = new JLabel();
+//        outputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        outputFileSizeLabel.setBounds(300,150,100,50);
+//        add(outputFileSizeLabel);
+//
+//        compressionRatioLabel = new JLabel();
+//        compressionRatioLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
+//        compressionRatioLabel.setBounds(200,250,100,50);
+//        add(compressionRatioLabel);
 
         setLayout(null);
-        setSize(500,500);
+        setContentPane(huffmanPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        inputFileSizeLabel.setVisible(false);
+        outputFileSizeLabel.setVisible(false);
+        compressionRatioLabel.setVisible(false);
+        inputFileSizeTextField.setVisible(false);
+        outputFileSizeTextField.setVisible(false);
+        compressionRatioTextField.setVisible(false);
+
+        pack();
         setLocationRelativeTo(null);
         setVisible(true);
+
+        encodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String inputPath = helper.chooseFile(true);
+                //System.out.println(path);
+                String str = null;
+                try {
+                    str = helper.readFileAsString(inputPath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                String arr[]=new String[2];
+                arr=Main_Build_HuffmanTree(str);
+                String encoded_str=arr[1];
+                //Main_Build_HuffmanTree(str);
+                System.out.print("\nInput String = "+str);
+                //System.out.print("\nEncoded String = "+encoded_str);
+
+                String outputPath = arr[0];
+                try {
+                    helper.writeFile(outputPath,encoded_str);
+                    System.out.println("File Saved Successfully");
+                    long inputFileSize = helper.calcFileSize(inputPath);
+                    long outputFileSize = helper.calcFileSize(outputPath);
+                    float compressionRatio = helper.calculateCompression(inputFileSize,outputFileSize);
+                    System.out.println("Input File - "+inputFileSize);
+                    System.out.println("Output File - "+outputFileSize);
+
+                    inputFileSizeLabel.setVisible(true);
+                    outputFileSizeLabel.setVisible(true);
+                    compressionRatioLabel.setVisible(true);
+                    inputFileSizeTextField.setVisible(true);
+                    outputFileSizeTextField.setVisible(true);
+                    compressionRatioTextField.setVisible(true);
+
+                    inputFileSizeLabel.setText(Long.toString(inputFileSize));
+                    outputFileSizeLabel.setText(Long.toString(outputFileSize));
+                    compressionRatioLabel.setText(Float.toString(compressionRatio));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        decodeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                String inputPath = helper.chooseFile(true);
+                //System.out.println(path);
+                String str = null;
+                try {
+                    str = helper.readFileAsString(inputPath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                //String encoded_str = decode(str);
+                System.out.print("\nInput String = "+str);
+                //System.out.print("\nDecoded String = "+encoded_str);
+
+            /*String outputPath = helper.chooseFile(false);
+            try {
+                helper.writeFile(outputPath,encoded_str);
+                System.out.println("File Saved Successfully");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+            }
+        });
     }
 
 
@@ -231,74 +315,13 @@ class Huffman extends JFrame implements ActionListener
     }
 
     // Call the Huffman code
-    public static void main(String[] args)
-    {
-        //String text = "This is delftstack";
-        //String text = "AAABBBBBBBB  CCCCDDDDDAAABBBBBBBB";
-        //Main_Build_HuffmanTree(text);
-        new Huffman().setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent ae)
-    {
-        if(ae.getActionCommand().equals("Encode"))
-        {
-            String inputPath = helper.chooseFile(true);
-            //System.out.println(path);
-            String str = null;
-            try {
-                str = helper.readFileAsString(inputPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            String arr[]=new String[2];
-            arr=Main_Build_HuffmanTree(str);
-            String encoded_str=arr[1];
-            //Main_Build_HuffmanTree(str);
-            System.out.print("\nInput String = "+str);
-            //System.out.print("\nEncoded String = "+encoded_str);
-
-            String outputPath = arr[0];
-            try {
-                helper.writeFile(outputPath,encoded_str);
-                System.out.println("File Saved Successfully");
-                long inputFileSize = helper.calcFileSize(inputPath);
-                long outputFileSize = helper.calcFileSize(outputPath);
-                float compressionRatio = helper.calculateCompression(inputFileSize,outputFileSize);
-                System.out.println("Input File - "+inputFileSize);
-                System.out.println("Output File - "+outputFileSize);
-
-                inputFileSizeLabel.setText(Long.toString(inputFileSize));
-                outputFileSizeLabel.setText(Long.toString(outputFileSize));
-                compressionRatioLabel.setText(Float.toString(compressionRatio));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else if(ae.getActionCommand().equals("Decode"))
-        {
-            String inputPath = helper.chooseFile(true);
-            //System.out.println(path);
-            String str = null;
-            try {
-                str = helper.readFileAsString(inputPath);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            //String encoded_str = decode(str);
-            System.out.print("\nInput String = "+str);
-            //System.out.print("\nDecoded String = "+encoded_str);
-
-            /*String outputPath = helper.chooseFile(false);
-            try {
-                helper.writeFile(outputPath,encoded_str);
-                System.out.println("File Saved Successfully");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
-        }
-    }
+//    public static void main(String[] args)
+//    {
+//        //String text = "This is delftstack";
+//        //String text = "AAABBBBBBBB  CCCCDDDDDAAABBBBBBBB";
+//        //Main_Build_HuffmanTree(text);
+//        new Huffman().setVisible(true);
+//    }
 }
 
 // A Tree node

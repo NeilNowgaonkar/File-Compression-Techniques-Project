@@ -25,38 +25,6 @@ public class RLE extends JFrame
         // Helper Object
         helper = new Helper();
 
-        // UI
-//        encodeBtn=new JButton("Encode");
-//        encodeBtn.setBackground(Color.BLACK);
-//        encodeBtn.setForeground(Color.WHITE);
-//        encodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
-//        encodeBtn.setBounds(100,350,100,50);
-//        encodeBtn.addActionListener(this);
-//        add(encodeBtn);
-//
-//        decodeBtn = new JButton("Decode");
-//        decodeBtn.setBackground(Color.BLACK);
-//        decodeBtn.setForeground(Color.WHITE);
-//        decodeBtn.setFont(new Font("Tahoma",Font.PLAIN,20));
-//        decodeBtn.setBounds(300,350,100,50);
-//        decodeBtn.addActionListener(this);
-//        add(decodeBtn);
-//
-//        inputFileSizeLabel = new JLabel();
-//        inputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-//        inputFileSizeLabel.setBounds(100,150,100,50);
-//        add(inputFileSizeLabel);
-//
-//        outputFileSizeLabel = new JLabel();
-//        outputFileSizeLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-//        outputFileSizeLabel.setBounds(300,150,100,50);
-//        add(outputFileSizeLabel);
-//
-//        compressionRatioLabel = new JLabel();
-//        compressionRatioLabel.setFont(new Font("Tahoma",Font.PLAIN,20));
-//        compressionRatioLabel.setBounds(200,250,100,50);
-//        add(compressionRatioLabel);
-
         setLayout(null);
         setContentPane(rlePanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
