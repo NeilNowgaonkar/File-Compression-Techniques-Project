@@ -6,9 +6,7 @@
 
 2.) LZ77
 
-3.) LZSS
-
-4.) Huffman Encoding
+3.) Huffman Encoding
 
 
 ## Helper Class
