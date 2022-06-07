@@ -112,9 +112,9 @@ public class Huffman extends JFrame
                     outputFileSizeTextField.setVisible(true);
                     compressionRatioTextField.setVisible(true);
 
-                    inputFileSizeLabel.setText(Long.toString(inputFileSize));
-                    outputFileSizeLabel.setText(Long.toString(outputFileSize));
-                    compressionRatioLabel.setText(Float.toString(compressionRatio));
+                    inputFileSizeTextField.setText(Long.toString(inputFileSize));
+                    outputFileSizeTextField.setText(Long.toString(outputFileSize));
+                    compressionRatioTextField.setText(Float.toString(compressionRatio));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
